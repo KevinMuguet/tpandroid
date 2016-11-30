@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             lblIMG.setTextColor(Color.GREEN);
 
         }
-        lblIMG.setText("IMG "+message);
+        lblIMG.setText("IMG "+message);"test"
 
     }
 }
