@@ -3,8 +3,12 @@ package com.example.mutangana.coach.modele;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.example.mutangana.coach.outils.MesOutils;
 import com.example.mutangana.coach.outils.MySQLiteOpenHelper;
+
+import java.util.Date;
 
 /**
  * Created by Mutangana on 30/11/2016.
@@ -13,11 +17,12 @@ import com.example.mutangana.coach.outils.MySQLiteOpenHelper;
 public class AccesLocal {
 
     private String nomBase = "bdCoach.sqlite";
-    private Integer versionBase = 1;
+    private int versionBase = 1;
     private MySQLiteOpenHelper accesBD;
     private SQLiteDatabase bd;
     private String req;
-    private Profil profil = null;
+
+
 
     public AccesLocal(Context context) {
 
@@ -25,35 +30,40 @@ public class AccesLocal {
     }
 
     /**
-     *
-     * @param profil
-     * ajout dans profil
+     * @param profil ajout dans profil
      */
     public void ajoutProfil(Profil profil) {
 
         bd = accesBD.getWritableDatabase();
-        req = "INSERT INTO PROFIL VALUES (\"" + profil.getDateMesure() + "\"," + profil.getPoids() + "," + profil.getTaille() + "," + profil.getAge() + "," + profil.getSexe() + ")";
+        req = "insert into profil values (\"" + MesOutils.convertDateToString(profil.getDateMesure()) + "\"," + profil.getPoids() + "," + profil.getTaille() + "," + profil.getAge() + "," + profil.getSexe() + ")";
         bd.execSQL(req);
+
     }
 
     /**
      * recupère le dernier profil
+     *
      * @return
      */
     public Profil recupDernier() {
-
+         Profil profil = null;
         bd = accesBD.getReadableDatabase();
-        req = "SELECT* FROM PROFIL ORDER BY dateMesure desc";
-        Cursor cursor=bd.rawQuery(req,null);
-        cursor.moveToFirst();
-        if(cursor.moveToFirst()){
+        String req2 = "select * from profil order by dateMesure DESC";
 
-            cursor.getInt(profil.getSexe());
-            cursor.getInt(profil.getAge());
-            cursor.getInt(profil.getPoids());
-            cursor.getInt(profil.getTaille());
-            cursor.getInt((profil)(date)(dateme))
+        Cursor cursor = bd.rawQuery(req2, null);
+        // se positionne sur la première ligne
+        Log.d("test","******************"+"avant if");
+        if (cursor.moveToFirst()) {
+            Date dateMesure =  MesOutils.convertStringToDate(cursor.getString(0));
+            Log.d("dateapreslaconvertion","*****************************"+dateMesure);
+            int poids = cursor.getInt(1);
+            int taille = cursor.getInt(2);
+            int age = cursor.getInt(3);
+            int sexe = cursor.getInt(4);
+            profil= new Profil(poids,taille,age,sexe, dateMesure);
         }
+        cursor.close();
+        return profil;
 
 
     }

@@ -17,7 +17,7 @@ public abstract class MesOutils {
      */
     public static Date convertStringToDate(String unedate) {
 
-         
+
         String expectedPattern ="dd/MM/yy HH:mm:ss";
         SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
         try {

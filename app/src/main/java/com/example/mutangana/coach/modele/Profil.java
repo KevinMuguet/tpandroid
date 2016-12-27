@@ -1,10 +1,19 @@
 package com.example.mutangana.coach.modele;
 
+import com.example.mutangana.coach.outils.Serializer;
+
+import org.json.JSONArray;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by Mutangana on 15/11/2016.
  */
 
-public class Profil {
+public class Profil implements Serializable {
     private static final Integer minFemme = 15; // maigre si en dessous
     private static final Integer maxFemme = 30; // gros si au dessus
     private static final Integer minHomme = 10; // maigre si en dessous
@@ -15,12 +24,14 @@ public class Profil {
     private Integer sexe;
     private float img;
     private String message;
+    private Date dateMesure;
 
-    public Profil(Integer poids, Integer taille, Integer age, Integer sexe) {
+    public Profil(Integer poids, Integer taille, Integer age, Integer sexe, Date dateMesure ) {
         this.poids = poids;
         this.taille = taille;
         this.age = age;
         this.sexe = sexe;
+        this.dateMesure= dateMesure;
         calculIMG();
         resultIMG();
 
@@ -88,4 +99,19 @@ public class Profil {
         }
     }
 
+    public Date getDateMesure() {
+        return dateMesure;
+    }
+    public JSONArray convertToJSONArray(){
+        List tableau = new ArrayList();
+        tableau.add(dateMesure);
+        tableau.add(poids);
+        tableau.add(taille);
+        tableau.add(age);
+        tableau.add(sexe);
+
+        JSONArray res = new JSONArray(tableau);
+        return res;
+
+    }
 }

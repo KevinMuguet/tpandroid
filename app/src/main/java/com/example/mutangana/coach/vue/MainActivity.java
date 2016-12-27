@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.mutangana.coach.R;
 import com.example.mutangana.coach.controleur.Controle;
-import com.example.mutangana.coach.modele.Profil;
 
 public class MainActivity extends AppCompatActivity {
     private EditText txtPoids;
@@ -27,10 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);// R représente le dossier res
+        setContentView(R.layout.activity_calcul);// R représente le dossier res
         init();
     }
 
@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
         rdHomme = (RadioButton) findViewById(R.id.rdHomme);//récupérer le rdhomme à partir de son id
         lblIMG = (TextView) findViewById(R.id.lblIMG);
         imgSmiley = (ImageView) findViewById(R.id.imgSmiley);//récupérer l'image à partir de son id
-        controle = controle.getInstance();
+        controle = controle.getInstance(this);
+        recupProfil();
         ecouteCalcul();
     }
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void affichResult(Integer poids, Integer taille, Integer age, Integer sexe) {
-        controle.creerProfil(poids, taille, age, sexe);
+        controle.creerProfil(poids, taille, age, sexe,this);
         String message = controle.getMessage();
         float img = controle.getImg();
 
@@ -107,7 +108,24 @@ public class MainActivity extends AppCompatActivity {
             lblIMG.setTextColor(Color.GREEN);
 
         }
-        lblIMG.setText("IMG "+message);"test"
+        lblIMG.setText("IMG "+message);
 
     }
+    private void recupProfil(){
+        if(controle.getTaille()!=null){
+            txtTaille.setText(""+controle.getTaille());
+            txtAge.setText(""+controle.getAge());
+            txtPoids.setText(""+controle.getPoids());
+            if(controle.getSexe() ==1){
+                rdHomme.setChecked(true);
+            }
+            else{
+                rdHomme.setChecked(false);
+            }
+            ((Button) findViewById(R.id.btnCalc)).performClick();
+        }
+    }
+
+
+
 }

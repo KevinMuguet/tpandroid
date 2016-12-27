@@ -146,7 +146,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_weight="1"
+            android:layout_weight="0.80"
             android:layout_gravity="center_vertical|center_horizontal">
 
             <ImageView
@@ -162,5 +162,24 @@
                 android:layout_weight="1" />
 
         </LinearLayout>
-    </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.72"
+            android:weightSum="1">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                app:srcCompat="@drawable/accueil"
+                android:id="@+id/imageView"
+                android:layout_weight="0.20"
+                android:layout_height="77dp" />
+
+        </LinearLayout>
+
+
+</LinearLayout>
+
 </RelativeLayout>
